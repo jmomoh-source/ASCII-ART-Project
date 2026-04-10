@@ -13,7 +13,7 @@ func TestAsciiArt(t *testing.T) {
 		{
 			name:     "single character",
 			input:    "A",
-			expected: "            \n     /\\     \n    /  \\    \n   / /\\ \\   \n  / ____ \\  \n /_/    \\_\\ \n            \n            \n",
+			expected: "           \n    /\\     \n   /  \\    \n  / /\\ \\   \n / ____ \\  \n/_/    \\_\\ \n           \n           \n",
 		},
 		{
 			name:     "hello lowercase",
