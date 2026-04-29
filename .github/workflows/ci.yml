@@ -28,6 +28,6 @@ jobs:
 
     - name: Static Analysis
       if: runner.os == 'Linux'
-      uses: golangci/golangci-lint-action@v5
+      uses: golangci/golangci-lint-action@v9
       with:
         version: latest
