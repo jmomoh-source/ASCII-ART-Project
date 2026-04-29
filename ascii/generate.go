@@ -5,11 +5,11 @@ import (
 	"strings"
 )
 
-// GenerateAsciiArt generates the full ASCII art string including banner selection, alignment, and coloring
 func GenerateAsciiArt(input string, banner string, colorRules map[string]string, align string, width int) (string, error) {
 	if align != "" && !IsValidAlignment(align) {
 		return "", fmt.Errorf("invalid alignment setting")
 	}
+
 	if banner == "" {
 		banner = DefaultBanner
 	}
@@ -25,12 +25,8 @@ func GenerateAsciiArt(input string, banner string, colorRules map[string]string,
 		return "", err
 	}
 
-	// Validate banner size
-	if len(lines) < 855 {
-		// Thinkertoy uses \r\n, LoadBanner splits by \n after replacing \r\n
-	}
-
 	words := strings.Split(input, "\\n")
+
 	var result strings.Builder
 
 	for _, word := range words {
@@ -39,16 +35,14 @@ func GenerateAsciiArt(input string, banner string, colorRules map[string]string,
 			continue
 		}
 
-		// compute colors for this word
 		charColors := GetCharColors(word, colorRules)
-		
+
 		var outputLines []string
 
 		if align == AlignJustify {
-			// Specific justify logic distributing spaces between words
 			parts := strings.Split(word, " ")
 			wordBlocks := make([][]string, len(parts))
-			
+
 			for w, part := range parts {
 				wordBlocks[w] = renderWord(part, lines, GetCharColors(part, colorRules))
 			}
@@ -56,7 +50,6 @@ func GenerateAsciiArt(input string, banner string, colorRules map[string]string,
 			if len(parts) <= 1 {
 				outputLines = wordBlocks[0]
 			} else {
-				// Width calculation
 				wordWidths := make([]int, len(wordBlocks))
 				totalWordWidth := 0
 				for w, block := range wordBlocks {

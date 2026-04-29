@@ -7,10 +7,10 @@ import (
 	"strings"
 )
 
-// GetTerminalWidth returns the current terminal width
 func GetTerminalWidth() int {
 	cmd := exec.Command("stty", "size")
 	cmd.Stdin = os.Stdin
+
 	out, err := cmd.Output()
 	if err != nil {
 		return DefaultWidth
@@ -22,6 +22,7 @@ func GetTerminalWidth() int {
 	}
 
 	w, err := strconv.Atoi(parts[1])
+
 	if err != nil || w <= 0 {
 		return DefaultWidth
 	}

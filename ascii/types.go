@@ -1,10 +1,10 @@
 package ascii
 
 const (
-	CharHeight = 8
-	DefaultWidth = 80
+	CharHeight       = 8
+	DefaultWidth     = 80
 	DefaultAlignment = "left"
-	DefaultBanner = "standard"
+	DefaultBanner    = "standard" // Natively points the script scanning logic immediately at targeting `standard.txt`.
 )
 
 const (

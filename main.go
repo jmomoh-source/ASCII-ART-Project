@@ -12,10 +12,10 @@ func usage() {
 	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
 	fmt.Println()
 	fmt.Println("Example:")
-	fmt.Println("  go run . \"hello\"")
+	fmt.Println("  go run . \"hello\"") // Generates standard drawing of "hello"
 	fmt.Println("  go run . \"hello\" shadow")
 	fmt.Println("  go run . --color=red \"hello\"")
-	fmt.Println("  go run . --color=red \"He\" \"hello\"")
+	fmt.Println("  go run . --color=red \"He\" \"hello\"") // Colors only the specific "He" block
 	fmt.Println("  go run . --output=out.txt \"hello\" standard")
 	fmt.Println("  go run . --align=center \"hello\" standard")
 }
@@ -36,7 +36,6 @@ func main() {
 	text := ""
 	bannerType := ""
 
-	// We iterate through arguments
 	for i := 0; i < len(args); i++ {
 		arg := args[i]
 
@@ -47,37 +46,45 @@ func main() {
 				return
 			}
 			colorFlags = append(colorFlags, color)
+
 		} else if strings.HasPrefix(arg, "--output=") {
 			outputFile = strings.TrimPrefix(arg, "--output=")
+
 		} else if strings.HasPrefix(arg, "--align=") {
 			alignment = strings.TrimPrefix(arg, "--align=")
+
 		} else if strings.HasPrefix(arg, "--") {
-			// Catch things like --color without =
 			usage()
 			return
+
 		} else {
-			// Positional
+
 			if len(colorFlags) > 0 {
 				hasMorePositional := false
+
 				for j := i + 1; j < len(args); j++ {
 					if !strings.HasPrefix(args[j], "--") {
 						hasMorePositional = true
 						break
 					}
 				}
+
 				if hasMorePositional && text == "" {
 					lastColor := colorFlags[len(colorFlags)-1]
 					colorFlags = colorFlags[:len(colorFlags)-1]
 					colorRules[arg] = lastColor
+
 				} else if text == "" {
 					text = arg
 					for _, c := range colorFlags {
 						colorRules[""] = c
 					}
 					colorFlags = nil
+
 				} else {
 					bannerType = arg
 				}
+
 			} else {
 				if text == "" {
 					text = arg
@@ -102,7 +109,7 @@ func main() {
 	}
 
 	width := ascii.GetTerminalWidth()
-	
+
 	result, err := ascii.GenerateAsciiArt(text, bannerType, colorRules, alignment, width)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
@@ -115,7 +122,6 @@ func main() {
 			fmt.Printf("Error writing to file: %v\n", err)
 		}
 	} else {
-		// Output to terminal
 		fmt.Print(result)
 	}
 }

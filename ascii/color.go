@@ -65,7 +65,7 @@ func hslToRGB(h, s, l float64) (uint8, uint8, uint8) {
 
 func ParseColor(color string) (string, bool) {
 	color = strings.ToLower(strings.TrimSpace(color))
-	
+
 	if val, ok := Colors[color]; ok {
 		return val, true
 	}
@@ -77,7 +77,7 @@ func ParseColor(color string) (string, bool) {
 			hStr := strings.TrimSpace(parts[0])
 			sOrig := strings.TrimSpace(parts[1])
 			lOrig := strings.TrimSpace(parts[2])
-			
+
 			sStr := strings.TrimSuffix(sOrig, "%")
 			lStr := strings.TrimSuffix(lOrig, "%")
 
@@ -92,11 +92,19 @@ func ParseColor(color string) (string, bool) {
 				if strings.HasSuffix(lOrig, "%") || l > 1 {
 					l /= 100.0
 				}
-				
-				if s < 0 { s = 0 }
-				if s > 1 { s = 1 }
-				if l < 0 { l = 0 }
-				if l > 1 { l = 1 }
+
+				if s < 0 {
+					s = 0
+				}
+				if s > 1 {
+					s = 1
+				}
+				if l < 0 {
+					l = 0
+				}
+				if l > 1 {
+					l = 1
+				}
 
 				r, g, b := hslToRGB(h, s, l)
 				return fmt.Sprintf("\033[38;2;%d;%d;%dm", r, g, b), true
@@ -107,7 +115,6 @@ func ParseColor(color string) (string, bool) {
 	return "", false
 }
 
-// GetCharColors computes the ANSI color codes for each character in the given text
 func GetCharColors(text string, rules map[string]string) []string {
 	charColors := make([]string, len(text))
 	if len(rules) == 0 {
@@ -117,10 +124,9 @@ func GetCharColors(text string, rules map[string]string) []string {
 	for sub, colorName := range rules {
 		colorCode, ok := ParseColor(colorName)
 		if !ok {
-			continue // ignore invalid colors
+			continue
 		}
 
-		// empty key means color everything
 		if sub == "" {
 			for i := range charColors {
 				charColors[i] = colorCode
