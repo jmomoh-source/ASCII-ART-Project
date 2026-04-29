@@ -25,6 +25,10 @@ func GenerateAsciiArt(input string, banner string, colorRules map[string]string,
 		return "", err
 	}
 
+	// Handles real physical newlines sent by the web UI (converting them dynamically ensuring uniform array splitting)
+	input = strings.ReplaceAll(input, "\r\n", "\\n")
+	input = strings.ReplaceAll(input, "\n", "\\n")
+
 	words := strings.Split(input, "\\n")
 
 	var result strings.Builder

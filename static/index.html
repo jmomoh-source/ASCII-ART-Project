@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Art Generator</title>
+    <meta name="description" content="Generate stunning ASCII art from text. Choose fonts, colors, and alignment options.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <div class="container">
+        <div class="theme-toggle-container">
+            <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Light/Dark Theme">
+                <svg id="theme-icon-sun" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="theme-icon-moon" class="theme-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+
+        <header class="header">
+            <h1 id="page-title">
+                <span class="title-icon">⬡</span>
+                ASCII Art Generator
+            </h1>
+            <p class="subtitle">Transform your text into beautiful ASCII art</p>
+        </header>
+
+        <main class="main-content">
+            <div class="controls-card glass-card">
+                <div class="input-group">
+                    <label for="text-input" class="label">Your Text</label>
+                    <textarea
+                        id="text-input"
+                        class="text-input"
+                        placeholder="Type something amazing... (Press Enter for new line)"
+                        maxlength="550"
+                        autocomplete="off"
+                        rows="3"
+                    ></textarea>
+                    <span class="char-count" id="char-count">0 / 550</span>
+                </div>
+
+                <div class="options-row">
+                    <div class="input-group">
+                        <label for="font-select" class="label">Font</label>
+                        <select id="font-select" class="select-input">
+                            <option value="standard" selected>Standard</option>
+                            <option value="shadow">Shadow</option>
+                            <option value="thinkertoy">Thinkertoy</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="color-select" class="label">Color</label>
+                        <select id="color-select" class="select-input">
+                            <option value="" selected>Default</option>
+                            <option value="red">Red</option>
+                            <option value="green">Green</option>
+                            <option value="yellow">Yellow</option>
+                            <option value="blue">Blue</option>
+                            <option value="orange">Orange</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="align-select" class="label">Alignment</label>
+                        <select id="align-select" class="select-input">
+                            <option value="left" selected>Left</option>
+                            <option value="center">Center</option>
+                            <option value="right">Right</option>
+                            <option value="justify">Justify</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generate-btn" class="generate-btn">
+                    <span class="btn-text">Generate ASCII Art</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+
+            <div class="output-card glass-card" id="output-card">
+                <div class="output-header">
+                    <h2 class="output-title">Output</h2>
+                    <div class="output-actions">
+                        <button id="copy-btn" class="action-btn" title="Copy to clipboard" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <button id="download-btn" class="action-btn" title="Download as .txt" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+                <div class="output-area" id="output-area">
+                    <pre id="output-text" class="output-text">
+    _____  _____ _____ _____            _____ _______ 
+   /\    /  ___// ____|_   _|          /\    |  __ \ \\
+  /  \  | (___| |      | |  ______   /  \   | |__) | |
+ / /\ \  \___ \ |      | | |______| / /\ \  |  _  /| |
+/ ____ \ ____) | |____ _| |_       / ____ \ | | \ \| |
+/_/    \_\_____/ \_____|_____|     /_/    \_\|_|  \_\_|
+                                                        
+        Type something and hit Generate!
+                    </pre>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Built by <strong>Jezreal Momoh</strong> · GPLv3 License · 2026</p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script src="app.js"></script>
+</body>
+</html>

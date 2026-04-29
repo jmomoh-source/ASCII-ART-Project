@@ -28,6 +28,15 @@ func main() {
 		return
 	}
 
+	if args[0] == "--web" {
+		port := "8080"
+		if len(args) > 1 {
+			port = args[1]
+		}
+		startServer(port)
+		return
+	}
+
 	colorRules := make(map[string]string)
 	var colorFlags []string
 
